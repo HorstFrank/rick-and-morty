@@ -72,3 +72,36 @@ export async function getCharacters(name?: string) {
   );
   return characters;
 }
+
+function getInnerLinks(html: string): Array {
+  // https://monkeyisland.fandom.com
+  // <a\shref="(.*?)":*>(Category:)?(.*)<
+
+  let arr = [];
+
+  let result = html.matchAll(
+    /<a\shref="(?<innerUrl>[^"]*)"[^>]*>(?<kind>Category:)?(?<title>.*)<\/a/g
+  );
+
+  for (let r of result) {
+    arr.push(r.groups);
+  }
+
+  // for (let r of result) {
+  //   // alert(result);
+  //   // first alert: <h1>,h1
+  //   // second: <h2>,h2
+  // }
+  console.log(arr);
+}
+
+export async function getApiTest(name?: string) {
+  const response = await fetch(
+    `https://cors-anywhere.herokuapp.com/https://monkeyisland.fandom.com/wiki/Category:In-Universe`
+  );
+  console.log(response.status);
+  const result = await response.text();
+
+  getInnerLinks(result);
+  // console.log(result);
+}

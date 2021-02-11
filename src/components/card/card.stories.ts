@@ -1,7 +1,10 @@
 import "./card.css";
 import { createCard } from "./card";
+import { createFlipCard } from "./card";
 import { createElement } from "../../utils/createElement";
 import { Character, getCharacter, getCharacters } from "../../utils/api";
+// import { getRand } from "../../utils/helper";
+import { getApiTest } from "../../utils/api";
 
 export default {
   title: "Components/Card",
@@ -64,6 +67,20 @@ type CharacterFromAPIProps = {
     character: Character;
   };
 };
+
+export const CharacterFlipCardFromAPI = (
+  args,
+  { loaded: { character } }: CharacterFromAPIProps
+) => {
+  return createFlipCard(character);
+};
+
+CharacterFlipCardFromAPI.loaders = [
+  async () => ({
+    character: await getCharacter(1),
+  }),
+];
+
 export const CharacterFromAPI = (
   args,
   { loaded: { character } }: CharacterFromAPIProps
@@ -99,7 +116,7 @@ CharactersFromAPI.loaders = [
   }),
 ];
 
-const getRand = (min, max) => parseInt(Math.random() * (max - min) + min);
+// const getRand = (min, max) => parseInt(Math.random() * (max - min) + min);
 
 export const randCharacterFromAPI = (
   args,
@@ -118,14 +135,13 @@ export const RandomCharacter = () => {
   const randomButton = createElement("button", {
     innerText: "Load random character",
     onclick: async () => {
-      console.log("onclick start");
+      // console.log("onclick start");
       // Verify each step (alert, console.log)
       // 1) generate random character id
-      const id = getRand(1, 666);
+      // const id = getRand(1, 666);
       // console.log("Randoom Id: ", id);
       // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random#getting_a_random_number_between_two_values
       // 2) getCharacter from API
-
       // const c = randCharacterFromAPI();
       // console.log("Character data: ", c);
       // 3) create card
@@ -172,5 +188,18 @@ export const CharactersFromAPIWithFilter = (
 CharactersFromAPIWithFilter.loaders = [
   async () => ({
     characters: await getCharacters(),
+  }),
+];
+
+export const testFromAPI = (
+  args,
+  { loaded: { character } }: CharacterFromAPIProps
+) => {
+  return createElement("div", {});
+};
+
+testFromAPI.loaders = [
+  async () => ({
+    character: await getApiTest(),
   }),
 ];
