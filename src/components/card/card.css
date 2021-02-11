@@ -1,0 +1,17 @@
+.card {
+  background-color: darkslategray;
+  padding: 30px 10px 20px 10px;
+  border-radius: 160px 160px 10px 10px;
+  color: white;
+  text-align: center;
+  margin: 10px;
+}
+
+.card__image {
+  border-radius: 50%;
+  width: 80%;
+}
+
+.card__name {
+  font-weight: bold; /* Schriftstärke */
+}
